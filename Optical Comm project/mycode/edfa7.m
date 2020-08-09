@@ -1,0 +1,29 @@
+function pdot=edfa7(l,pp)
+r=5e-06;
+gammap=0.4;
+gammas=0.8;
+N=1e25;
+A=pi.*r^2;
+lamdap=1480e-09;
+segmaep=0.7899e-25;
+segmaap=1.950e-25;
+lamdas=1550e-09;
+segmaes=3.084e-25;
+segmaas=2.277e-25;
+t=10e-03;
+c=3e8;
+h=6.626e-34;
+deltalamda=0.1e-09;
+const1=(lamdas.*gammas.*segmaes)/(A*h*c);
+const2=(lamdas.*gammas.*segmaas)/(A*h*c);
+const3=(lamdap.*gammap.*segmaep)/(A*h*c);
+const4=(lamdap.*gammap.*segmaap)/(A*h*c);
+N2=((const2.*pp(2)+const4.*pp(1)).*N)./((1/t)+const1.*pp(2)+...
+const2.*pp(2)+const3.*pp(1)+const4.*pp(1));
+N1=N-N2;
+pdot(1)=(gammap.*((segmaep.*N2-segmaap.*N1).*pp(1)+...
+        (2*h*c^2*segmaep.*N2.*deltalamda)/lamdap));
+pdot(2)=(gammas.*((segmaes.*N2-segmaas.*N1).*pp(2)+...
+        (2*h*c^2*segmaes.*N2.*deltalamda)/lamdas)); ...
+pdot=pdot';
+end
